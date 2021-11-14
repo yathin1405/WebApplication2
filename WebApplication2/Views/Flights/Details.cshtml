@@ -1,0 +1,158 @@
+﻿@model WebApplication2.Models.Flight
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<h2 class="text-center text-success">Flight: @Model.TicketNumber </h2>
+<h4 class="text-center">Your Receipt For Booking @Model.TicketNumber</h4>
+<h5 class="text-center text-info">Flight Details</h5>
+
+@if (Model.BoardDateAndTime == null)
+{
+    <h1 class="text-center text-warning">You have not boarded your flight yet.</h1> }
+else
+{
+    <h1 class="text-center text-info">You've boarded the flight on: @Model.BoardDateAndTime</h1>}
+
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DestinationL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DestinationL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FlightL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FlightL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </dt>
+
+        <dd>
+            R @Html.DisplayFor(model => model.TotalCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateFlight)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateFlight)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateReturn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateReturn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateBooked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateBooked)
+        </dd>
+
+
+    </dl>
+</div>
+<hr />
+<h2 class="text-center text-success">Additional Details</h2>
+
+<div>
+    <h4 class="text-center text-info">Details of your Booking</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TicketNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TicketNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerSurname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerSurname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdNumber)
+        </dd>
+
+    </dl>
+
+    <h2 class="text-center text-success">Waypoint To Airport: </h2>
+    <iframe width="800"
+            height="480"
+            frameborder="0" style="position : relative; left : 15%;"
+            src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyBNcE7mezvGDziXJG3p8wvchw5SSZMnUiQ&origin='@Model.Address'&destination='@ViewBag.Destination'&avoid=tolls|highways" allowfullscreen>
+    </iframe>
+    <br />
+    <br />
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="@Model.FlightId" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center">Confirm @Model.CustomerName @Model.CustomerSurname: @Model.FlightL Airplane</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-info text-center text-capitalize">Ticket Number:</p>
+                    <p class="text-center">@Model.TicketNumber</p>
+                    <p class="text-danger text-center text-capitalize">Airplane:</p>
+                    <p class="text-center">@Model.FlightL</p>
+                    <p class="text-success text-center text-capitalize">Destination:</p>
+                    <p class="text-center">@Model.DestinationL</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Board", "Flights", new { id = Model.FlightId })'">Confirm Boarded</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<p>
+    <a href="@Url.Action(actionName: "MyFlights", controllerName: "Manage")" class="btn btn-success"><i class="fa fa-shopping-cart"></i>Return To Flight History</a>
+    @if (Model.BoardDateAndTime == null && User.IsInRole("Aviation"))
+    {
+        <a href="#" class="btn btn-success" data-toggle="modal" data-target="#@Model.FlightId"><i class="fa fa-shopping-cart"></i>Board Customer</a>}
+</p>
