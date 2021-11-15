@@ -53,8 +53,8 @@ namespace WebApplication2.Models
         [DataType(DataType.Date, ErrorMessage = "Date only")]
         public string DateReturn { get; set; }
 
-        //public bool returnTicket { get; set; }
-
+        public bool returnTicket { get; set; }
+        public string Email { get; set; }
         [Display(Name = "Number of Adults")]
         public int NumA { get; set; }
 
@@ -73,7 +73,25 @@ namespace WebApplication2.Models
         public string PhoneNumber { get; set; }
         public string DateBooked { get; set; } //
         public string BoardDateAndTime { get; set; } //
-        public string TicketNumber { get; set; } //     
+        public string TicketNumber { get; set; } //
+        public string RefID { get; set; }
+
+        public string determineKey()
+        {
+            Random ran = new Random();
+            string r = "";
+
+
+
+            string firstTwo = CustomerName.Substring(0, 2);
+            string nextTwo = IdNumber.Substring(4, 3);
+            int randomOne = ran.Next(1, 101);
+            int randomTwo = ran.Next(101, 201);
+            int diff = (randomTwo - randomOne);
+            string d = Convert.ToString(diff);
+            r = firstTwo + nextTwo + d + "";
+            return r + "";
+        }
 
     }
 }

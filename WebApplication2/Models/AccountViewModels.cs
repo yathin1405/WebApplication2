@@ -64,6 +64,10 @@ namespace WebApplication2.Models
 
     public class RegisterViewModel
     {
+        public ApplicationUser user;
+
+       
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -97,6 +101,19 @@ namespace WebApplication2.Models
         [Required]
         [Display(Name = "Address")]
         public string Address { get; set; }
+        public virtual List<Flight> Flights { get; set; }
+        public RegisterViewModel() { }
+
+        public RegisterViewModel(ApplicationUser user)
+        {
+            this.Email = user.Email;
+            this.FirstName = user.FirstName;
+            this.LastName = user.LastName;
+            this.IdNumber = user.IdNumber;
+            this.Address = user.Address;
+            
+            //this.reservationns = user.reservationns;
+        }
     }
 
     public class ResetPasswordViewModel

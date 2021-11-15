@@ -19,24 +19,9 @@
     @Html.HiddenFor(x => x.DateBooked)
     @Html.HiddenFor(x => x.TotalCost)
     @Html.HiddenFor(x => x.TicketNumber)
-
-    <p><a class="btn btn-default" href="https://localhost:44305/Flights1/Create">One way </a></p>
+    <p><a class="btn btn-default" href="https://localhost:44305/Flights/Create">Return Flight</a></p>
 
     <div class="form-horizontal">
-
-
-
-
-        @*<div class="form-group">
-
-            @Html.Label("One Way", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <div class="radio">
-                        @Html.RadioButton(model => model.returnTicket == true)
-                        @Html.ValidationMessageFor(model => model.returnTicket, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-        </div>*@
 
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -80,13 +65,13 @@
             </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.Label("Return Date:", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DateReturn, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.DateReturn, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
         <div class="form-group">
             @Html.Label("Number of Adults:", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -114,6 +99,15 @@
                 @Html.EditorFor(model => model.RefID, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.RefID, "", new { @class = "text-danger" })
             </div>*@
+            @*<div class="form-group">
+                @Html.Label("Return Ticket?", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.returnTicket)
+                        @Html.ValidationMessageFor(model => model.returnTicket, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>*@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
@@ -122,7 +116,9 @@
             </div>
         </div>}
 
-
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
 
         @section Scripts {
             @Scripts.Render("~/bundles/jqueryval")

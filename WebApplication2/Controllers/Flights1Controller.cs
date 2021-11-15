@@ -13,11 +13,11 @@ using System.Text;
 namespace WebApplication2.Controllers
 {
     [Authorize]
-    public class FlightsController : Controller
+    public class Flights1Controller : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        [Authorize(Roles = "Aviation")]
+        
         public ViewResult Index(string sortOrder, string searchString)
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -82,11 +82,161 @@ namespace WebApplication2.Controllers
 
             return View(flight);
         }
+        //public ActionResult Detail()
+        //{
+        //    string id = User.Identity.Name;
+        //    var Db = new ApplicationDbContext();
+        //    var user = Db.Users.First(u => u.Email == id);
+        //    var model = new RegisterViewModel(user);
+        //    model.Flights.Sort();
+        //    return View(model);
+        //}
+        //[HttpGet]
+        //[Authorize]
+        //public ActionResult guestDetail()
+        //{
+        //    List<Flight> gd = new List<Flight>();
+        //    var list = (from u in db.Users.Where(x => x.Email == HttpContext.User.Identity.Name)
+        //                join r in db.Flights on u.Email equals r.Email
+        //                where u.Email == r.Email
+        //                join rm in db.Rooms on r.RoomNo equals rm.RoomNo
+        //                join rt in db.roomTypes on rm.RoomTypeId equals rt.RoomTypeId
+        //                select new
+        //                {
+        //                    u.FirstName,
+        //                    u.LastName,
+        //                    u.Email,
+        //                    u.PhoneNumber,
+        //                    u.IdNumber,
+        //                    r.CustomerName,
+        //                    r.CustomerSurname,
+        //                    r.DateBooked,
+        //                    r.DateFlight,
+        //                    r.DateReturn,
+        //                    r.DestinationL,
+        //                    r.FlightId,
+        //                    r.FlightL,
+        //                    r.FromL,
+        //                    r.NumA,
+        //                    r.NumC,
+        //                    r.NumI,
+        //                    r.RefID,
+        //                    r.TotalCost,
 
 
+
+        //                }).ToList();
+        //    foreach (var it in list)
+        //    {
+        //        Flight gdd = new Flight();
+        //        gdd.CustomerName = it.FirstName;
+        //        gdd.CustomerSurname = it.LastName;
+        //        gdd.Email = it.Email;
+        //        gdd.DateFlight = it.DateFlight;
+        //        gdd.DateReturn = it.DateReturn;
+        //        gdd.DestinationL = it.DestinationL;
+        //        gdd.FlightId = it.FlightId;
+        //        gdd.FlightL = it.FlightL;
+        //        gdd.FromL = it.FromL;
+        //        gdd.IdNumber = it.IdNumber;
+        //        gdd.NumA = it.NumA;
+        //        gdd.NumC = it.NumC;
+        //        gdd.NumI = it.NumI;
+        //        gdd.RefID = it.RefID;
+
+        //        gdd.BasicCharge = it.BasicCharge;
+        //        gdd.TotalCost = it.TotalCost;
+        //        gdd.Discount = it.Discount;
+
+        //        gd.Add(gdd);
+        //    }
+        //    return View(gd);
+        //}
+        //public ActionResult ConfirmFlight(int? FlightID)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Flights.Add(flight);
+        //        db.SaveChanges();
+        //        Session["bookID"] = flight.FlightID;
+        //        return RedirectToAction("Payment");
+        //    }
+        //    {
+        //        if (FlightID == null)
+        //        {
+        //            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //        }
+        //        Flight reservation = db.Flights.Find(FlightID);
+        //        if (reservation == null)
+        //        {
+        //            return HttpNotFound();
+        //        }
+        //        Flight flight = db.Flights.Where(x => x.FlightID == flight.Email).FirstOrDefault();
+
+        //        GuestDetails Gdetails = new GuestDetails()
+        //        {
+        //            checkInDate = reservation.checkInDate,
+        //            checkOutDate = reservation.checkOutDate,
+        //            numGuests = reservation.numGuests,
+        //            DayNo = reservation.DayNo,
+        //            bookings = 0,
+        //            RoomNo = reservation.RoomNo,
+        //            FloorNum = rooms.FloorNum,
+        //            Type = rooms.Roomtype.Type,
+        //            BasicCharge = rooms.Roomtype.BasicCharge,
+        //            TotalPrice = reservation.TotalPrice
+        //        };
+
+        //        var rm = db.Flights.Find(reservation.FlightId);
+        //        var rmb = db.roomTypes.Find(rm.RoomTypeId);
+        //        gdd.CustomerName = it.FirstName;
+        //        gdd.CustomerSurname = it.LastName;
+        //        gdd.Email = it.Email;
+        //        gdd.DateFlight = it.DateFlight;
+        //        gdd.DateReturn = it.DateReturn;
+        //        gdd.DestinationL = it.DestinationL;
+        //        gdd.FlightId = it.FlightId;
+        //        gdd.FlightL = it.FlightL;
+        //        gdd.FromL = it.FromL;
+        //        gdd.IdNumber = it.IdNumber;
+        //        gdd.NumA = it.NumA;
+        //        gdd.NumC = it.NumC;
+        //        gdd.NumI = it.NumI;
+        //        gdd.RefID = it.RefID;
+
+        //        Flight Gdetails = new Flight();
+        //        Gdetails.CustomerName = reservation.CustomerName;
+        //        Gdetails.CustomerSurname = reservation.CustomerSurname;
+        //        Gdetails.DateFlight = reservation.DateFlight;
+        //        Gdetails.DateReturn = reservation.DateReturn; ;
+        //        Gdetails.DestinationL = reservation.DestinationL;
+        //        Gdetails.FlightId = reservation.FlightId;
+        //        Gdetails.FlightL = reservation.FlightL;
+        //        Gdetails.FromL = reservation.FromL;
+        //        Gdetails.IdNumber = reservation.IdNumber;
+        //        Gdetails.NumA = reservation.NumA;
+        //        Gdetails.NumC = reservation.NumC;
+        //        Gdetails.NumI = reservation.NumI;
+        //        Gdetails.RefID = reservation.RefID;
+        //        Gdetails.Email = reservation.Email;
+
+
+        //        Gdetails.bookings = 0;
+        //        Gdetails.TotalCost = rm.TotalCost;
+        //        Gdetails.ReturnTicket_Price = rm.ReturnTicketPrice();
+        //        Gdetails.Seat_Type_Calc = rm.SeatTypeCalc();
+        //        Gdetails. = rm.BasicCharge;
+        //        Gdetails.TotalPrice = reservation.TotalPrice;
+        //        Gdetails.Discount = reservation.Discount;
+        //        return View(Gdetails);
+        //    }
+
+
+        //}
         // GET: Flights/Create
-        public ActionResult Create()
+        public ActionResult Create(string id)
         {
+       
             return View();
         }
 
@@ -97,10 +247,6 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "FlightId,FlightL,Email,RefID,NumA,NumC,NumI,ClassL,FromL,DestinationL,DateFlight,DateReturn,returnTicket,TotalCost,CustomerName,CustomerSurname,Address,IdNumber,PhoneNumber,DateBooked,BoardDateAndTime,TicketNumber")] Flight flight)
         {
-            if(flight.returnTicket == true)
-            {
-                return RedirectToAction("Flights1/Create");
-            }
             Flight flights = new Flight();
 
             double finalCost = 0;
@@ -120,14 +266,14 @@ namespace WebApplication2.Controllers
             flights.Address = Address;
             flights.DateBooked = DateTime.Now.ToString();
 
-            DateTime returns = DateTime.Parse(flight.DateReturn);
+            //DateTime returns = DateTime.Parse(flight.DateReturn);
             DateTime departs = DateTime.Parse(flight.DateFlight);
 
-            TimeSpan DaysBooked = returns.Subtract(departs);
-            int numDays = DaysBooked.Days;
+            //TimeSpan DaysBooked = returns.Subtract(departs);
+            //int numDays = DaysBooked.Days;
 
             flights.DateFlight = departs.ToString();
-            flights.DateReturn = returns.ToString();
+            //flights.DateReturn = returns.ToString();
 
             string Ticket = "#300" + flights.FlightId + FirstName.Substring(0, 1) + LastName.Substring(0, 1) + DateTime.Now.ToString("FFFFF"); //100000ths of a second makes the ticket unique. (FFFFF)
 
@@ -238,7 +384,7 @@ namespace WebApplication2.Controllers
             //    finalCost += 450;
             //}
 
-            finalCost = finalCost*2;
+            //finalCost = finalCost * 2;
 
             //if (flight.returnTicket == true)
             //{
@@ -252,10 +398,15 @@ namespace WebApplication2.Controllers
 
             db.Flights.Add(flights);
             await db.SaveChangesAsync();
+           
             try
             {
                 // Retrieve required values for the PayFast Merchant
-                string name = "ParadiseTravels Flight: " + flight.DestinationL + "with" + flight.FlightL;
+                string name = "ParadiseTravels Flight: " +" "+ flight.DestinationL +" "
+                    + " "+"with" + flight.FlightL
+                    + " " + "Number of Adults" + " " + flight.NumA
+                    + " " + "Number of Children" + " " + flight.NumC
+                    + " " + "Number of Infants" + " " + flight.NumI;
                 string description = "This is a once-off and non-refundable payment. ";
 
                 string site = "https://sandbox.payfast.co.za/eng/process";

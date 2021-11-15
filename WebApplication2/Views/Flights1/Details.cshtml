@@ -1,0 +1,162 @@
+﻿@model WebApplication2.Models.Flight
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Flight</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FlightL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FlightL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FromL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FromL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DestinationL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DestinationL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClassL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClassL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateFlight)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateFlight)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateReturn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateReturn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerSurname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerSurname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateBooked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateBooked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BoardDateAndTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BoardDateAndTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TicketNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TicketNumber)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FlightId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
