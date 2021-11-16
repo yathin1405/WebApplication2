@@ -17,7 +17,7 @@ namespace WebApplication2.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        [Authorize(Roles = "Aviation")]
+        [Authorize]
         public ViewResult Index(string sortOrder, string searchString)
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -95,12 +95,12 @@ namespace WebApplication2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "FlightId,FlightL,Email,RefID,NumA,NumC,NumI,ClassL,FromL,DestinationL,DateFlight,DateReturn,returnTicket,TotalCost,CustomerName,CustomerSurname,Address,IdNumber,PhoneNumber,DateBooked,BoardDateAndTime,TicketNumber")] Flight flight)
+        public async Task<ActionResult> Create([Bind(Include = "FlightId,FlightL,Email,Return_Time,DepartureTime,RefID,NumA,NumC,NumI,ClassL,FromL,DestinationL,DateFlight,DateReturn,returnTicket,TotalCost,CustomerName,CustomerSurname,Address,IdNumber,PhoneNumber,DateBooked,BoardDateAndTime,TicketNumber")] Flight flight)
         {
-            if(flight.returnTicket == true)
-            {
-                return RedirectToAction("Flights1/Create");
-            }
+            //if(flight.returnTicket == true)
+            //{
+            //    return RedirectToAction("Flights1/Create");
+            //}
             Flight flights = new Flight();
 
             double finalCost = 0;
@@ -123,8 +123,8 @@ namespace WebApplication2.Controllers
             DateTime returns = DateTime.Parse(flight.DateReturn);
             DateTime departs = DateTime.Parse(flight.DateFlight);
 
-            TimeSpan DaysBooked = returns.Subtract(departs);
-            int numDays = DaysBooked.Days;
+            //TimeSpan DaysBooked = returns.Subtract(departs);
+            //int numDays = DaysBooked.Days;
 
             flights.DateFlight = departs.ToString();
             flights.DateReturn = returns.ToString();
@@ -249,6 +249,11 @@ namespace WebApplication2.Controllers
             flights.FlightL = flight.FlightL;
             flights.DestinationL = flight.DestinationL;
             flights.FromL = flight.FromL;
+            flights.Return_Time = flight.Return_Time;
+            flights.DepartureTime = flight.DepartureTime;
+            flights.NumA = flight.NumA;
+            flights.NumC = flight.NumC;
+            flights.NumI = flight.NumI;
 
             db.Flights.Add(flights);
             await db.SaveChangesAsync();

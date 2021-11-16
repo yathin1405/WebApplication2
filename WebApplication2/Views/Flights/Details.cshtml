@@ -4,18 +4,18 @@
     ViewBag.Title = "Details";
 }
 
-
 <h2 class="text-center text-success">Flight: @Model.TicketNumber </h2>
 <h4 class="text-center">Your Receipt For Booking @Model.TicketNumber</h4>
 <h5 class="text-center text-info">Flight Details</h5>
 
 @if (Model.BoardDateAndTime == null)
 {
-    <h1 class="text-center text-warning">You have not boarded your flight yet.</h1> }
+    <h1 class="text-center text-warning">You have not boarded your flight yet.</h1>
+}
 else
 {
-    <h1 class="text-center text-info">You've boarded the flight on: @Model.BoardDateAndTime</h1>}
-
+    <h1 class="text-center text-info">You've boarded the flight on: @Model.BoardDateAndTime</h1>
+}
 
 <div>
     <hr />

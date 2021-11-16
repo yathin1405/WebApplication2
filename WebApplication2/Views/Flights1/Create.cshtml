@@ -64,6 +64,19 @@
                 @Html.ValidationMessageFor(model => model.DateFlight, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartureTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.DepartureTime, new SelectListItem[]
+              {
+              new SelectListItem() { Text="06:00", Value="6:00:00"},
+              new SelectListItem() { Text="08:00", Value="8:00:00"},
+              new SelectListItem() { Text="10:00", Value="10:00:00"},
+              new SelectListItem() { Text="12:00", Value="12:00:00"},
+              }, "Select Time")
+
+            </div>
+        </div>
 
         @*<div class="form-group">
             @Html.Label("Return Date:", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -94,27 +107,27 @@
             </div>
         </div>
         @*<div class="form-group">
-            @Html.Label("Reference", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Reference", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.RefID, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.RefID, "", new { @class = "text-danger" })
+        </div>*@
+        @*<div class="form-group">
+            @Html.Label("Return Ticket?", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RefID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RefID, "", new { @class = "text-danger" })
-            </div>*@
-            @*<div class="form-group">
-                @Html.Label("Return Ticket?", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.returnTicket)
-                        @Html.ValidationMessageFor(model => model.returnTicket, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>*@
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-success" />
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.returnTicket)
+                    @Html.ValidationMessageFor(model => model.returnTicket, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>}
+        </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-success" />
+            </div>
+        </div>
+    </div>}
 
         <div>
             @Html.ActionLink("Back to List", "Index")

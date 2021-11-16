@@ -47,23 +47,31 @@ namespace WebApplication2.Models
             First
         }
 
-        [DataType(DataType.Date, ErrorMessage = "Date only")]
+        [DataType(DataType.Date, ErrorMessage = "Back date entry not allowed")]
+
         public string DateFlight { get; set; }
 
-        [DataType(DataType.Date, ErrorMessage = "Date only")]
+        [DataType(DataType.Date,ErrorMessage = "Back date entry not allowed")]
         public string DateReturn { get; set; }
 
         public bool returnTicket { get; set; }
         public string Email { get; set; }
+        [Range(0, 50, ErrorMessage = "Please enter a number between 0 and 50.")]
         [Display(Name = "Number of Adults")]
         public int NumA { get; set; }
-
+        [Range(0, 50, ErrorMessage = "Please enter a number between 0 and 50.")]
         [Display(Name = "Number of Children")]
         public int NumC { get; set; }
-
+        [Range(0, 50, ErrorMessage = "Please enter a number between 0 and 50.")]
         [Display(Name = "Number of Infants(Less than 1 Year old)")]
         public int NumI { get; set; }
+        [DataType(DataType.Time, ErrorMessage = "Time only")]
 
+        public string DepartureTime { get; set; }
+
+        [DataType(DataType.Time, ErrorMessage = "Time only")]
+
+        public string Return_Time { get; set; }
         public double TotalCost { get; set; }
 
         public string CustomerName { get; set; } //
@@ -92,6 +100,21 @@ namespace WebApplication2.Models
             r = firstTwo + nextTwo + d + "";
             return r + "";
         }
+        public class StartDateAttribute : ValidationAttribute
+        {
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+            {
+                DateTime _dateStart = Convert.ToDateTime(value);
+                if (_dateStart >= DateTime.Now)
+                {
+                    return ValidationResult.Success;
+                }
+                else
+                {
+                    return new ValidationResult(ErrorMessage);
+                }
+            }
 
+        }
     }
 }

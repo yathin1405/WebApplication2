@@ -33,11 +33,17 @@
             @Html.DisplayNameFor(model => model.DateFlight)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.DepartureTime)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.DateReturn)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Return_Time)
+        </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.returnTicket)
-        </th>*@
+                @Html.DisplayNameFor(model => model.returnTicket)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.NumA)
         </th>
@@ -62,17 +68,20 @@
         <th>
             @Html.DisplayNameFor(model => model.IdNumber)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.PhoneNumber)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.DateBooked)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.BoardDateAndTime)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.TicketNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RefID)
         </th>
         <th></th>
     </tr>
@@ -95,12 +104,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DateFlight)
             </td>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartureTime)
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.DateReturn)
             </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Return_Time)
+            </th>
             @*<td>
-                @Html.DisplayFor(modelItem => item.returnTicket)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.returnTicket)
+                </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.NumA)
             </td>
@@ -125,17 +140,20 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IdNumber)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.DateBooked)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.BoardDateAndTime)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.TicketNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RefID)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.FlightId }) |

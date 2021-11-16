@@ -10,6 +10,8 @@ using System.Web.Mvc;
 using WebApplication2.Models;
 using System.Text;
 
+
+
 namespace WebApplication2.Controllers
 {
     [Authorize]
@@ -17,22 +19,26 @@ namespace WebApplication2.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        
+
         public ViewResult Index(string sortOrder, string searchString)
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             var students = from s in db.Flights
+
                            select s;
             if (!String.IsNullOrEmpty(searchString))
             {
-                students = students.Where(s => s.CustomerSurname.Contains(searchString)
-                                       || s.CustomerName.Contains(searchString));
+                students = students.Where(s => s.RefID.Contains(searchString)
+                                       || s.RefID.Contains(searchString));
             }
             switch (sortOrder)
             {
                 case "name_desc":
                     students = students.OrderByDescending(s => s.CustomerSurname);
+                    break;
+                case "Referance":
+                    students = students.OrderByDescending(s => s.RefID);
                     break;
                 case "Date":
                     students = students.OrderBy(s => s.DateBooked);
@@ -236,7 +242,7 @@ namespace WebApplication2.Controllers
         // GET: Flights/Create
         public ActionResult Create(string id)
         {
-       
+
             return View();
         }
 
@@ -245,7 +251,7 @@ namespace WebApplication2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "FlightId,FlightL,Email,RefID,NumA,NumC,NumI,ClassL,FromL,DestinationL,DateFlight,DateReturn,returnTicket,TotalCost,CustomerName,CustomerSurname,Address,IdNumber,PhoneNumber,DateBooked,BoardDateAndTime,TicketNumber")] Flight flight)
+        public async Task<ActionResult> Create([Bind(Include = "FlightId,FlightL,Email,Return_Time,DepartureTime,RefID,NumA,NumC,NumI,ClassL,FromL,DestinationL,DateFlight,DateReturn,returnTicket,TotalCost,CustomerName,CustomerSurname,Address,IdNumber,PhoneNumber,DateBooked,BoardDateAndTime,TicketNumber")] Flight flight)
         {
             Flight flights = new Flight();
 
@@ -268,11 +274,13 @@ namespace WebApplication2.Controllers
 
             //DateTime returns = DateTime.Parse(flight.DateReturn);
             DateTime departs = DateTime.Parse(flight.DateFlight);
+            DateTime departsTime = DateTime.Parse(flight.DepartureTime);
 
             //TimeSpan DaysBooked = returns.Subtract(departs);
             //int numDays = DaysBooked.Days;
 
             flights.DateFlight = departs.ToString();
+            flights.DepartureTime = departsTime.ToString();
             //flights.DateReturn = returns.ToString();
 
             string Ticket = "#300" + flights.FlightId + FirstName.Substring(0, 1) + LastName.Substring(0, 1) + DateTime.Now.ToString("FFFFF"); //100000ths of a second makes the ticket unique. (FFFFF)
@@ -395,15 +403,25 @@ namespace WebApplication2.Controllers
             flights.FlightL = flight.FlightL;
             flights.DestinationL = flight.DestinationL;
             flights.FromL = flight.FromL;
-
+            flights.Return_Time = flight.Return_Time;
+            flights.DepartureTime = flight.DepartureTime;
+            flights.NumA = flight.NumA;
+            flights.NumC = flight.NumC;
+            flights.NumI = flight.NumI;
             db.Flights.Add(flights);
             await db.SaveChangesAsync();
-           
+
+
+
+
+
+
+
             try
             {
                 // Retrieve required values for the PayFast Merchant
-                string name = "ParadiseTravels Flight: " +" "+ flight.DestinationL +" "
-                    + " "+"with" + flight.FlightL
+                string name = "ParadiseTravels Flight: " + " " + flight.DestinationL + " "
+                    + " " + "with" + flight.FlightL
                     + " " + "Number of Adults" + " " + flight.NumA
                     + " " + "Number of Children" + " " + flight.NumC
                     + " " + "Number of Infants" + " " + flight.NumI;

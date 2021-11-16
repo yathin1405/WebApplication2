@@ -6,9 +6,15 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2 class="text-center text-info">Flight Attendant Menu</h2>
+<h3 class="text-center text-warning">Board Customers Here</h3>
+<hr />
+@using (Html.BeginForm())
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>}
 <table class="table">
     <tr>
         <th>
@@ -26,6 +32,10 @@
         <th>
             @Html.DisplayNameFor(model => model.DateFlight)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartureTime)
+        </th>
+        @*<th>*@
         <th>
             @Html.DisplayNameFor(model => model.DateReturn)
         </th>
@@ -53,15 +63,15 @@
         <th>
             @Html.DisplayNameFor(model => model.IdNumber)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.DateBooked)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BoardDateAndTime)
-        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.BoardDateAndTime)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.TicketNumber)
         </th>
@@ -71,71 +81,75 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.FlightL)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.FromL)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DestinationL)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.ClassL)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DateFlight)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DateReturn)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.NumA)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.NumC)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.NumI)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.TotalCost)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.CustomerName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.CustomerSurname)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Address)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.IdNumber)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.PhoneNumber)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DateBooked)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.BoardDateAndTime)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.TicketNumber)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.RefID)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.FlightId }) |
-        @Html.ActionLink("Details", "Details", new { id = item.FlightId }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.FlightId })
-    </td>
-</tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FromL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DestinationL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClassL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateFlight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateReturn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerSurname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdNumber)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.DateBooked)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.BoardDateAndTime)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RefID)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.FlightId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.FlightId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.FlightId })
+            </td>
+        </tr>
+    }
 
 </table>
