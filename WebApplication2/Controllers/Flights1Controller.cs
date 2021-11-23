@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication2.Models;
+using System.Net.Mail;
+using System.IO;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using System.Drawing;
 using System.Text;
+using System;
+using System.Data.Entity;
 
 
 
@@ -88,157 +91,16 @@ namespace WebApplication2.Controllers
 
             return View(flight);
         }
-        //public ActionResult Detail()
-        //{
-        //    string id = User.Identity.Name;
-        //    var Db = new ApplicationDbContext();
-        //    var user = Db.Users.First(u => u.Email == id);
-        //    var model = new RegisterViewModel(user);
-        //    model.Flights.Sort();
-        //    return View(model);
-        //}
-        //[HttpGet]
-        //[Authorize]
-        //public ActionResult guestDetail()
-        //{
-        //    List<Flight> gd = new List<Flight>();
-        //    var list = (from u in db.Users.Where(x => x.Email == HttpContext.User.Identity.Name)
-        //                join r in db.Flights on u.Email equals r.Email
-        //                where u.Email == r.Email
-        //                join rm in db.Rooms on r.RoomNo equals rm.RoomNo
-        //                join rt in db.roomTypes on rm.RoomTypeId equals rt.RoomTypeId
-        //                select new
-        //                {
-        //                    u.FirstName,
-        //                    u.LastName,
-        //                    u.Email,
-        //                    u.PhoneNumber,
-        //                    u.IdNumber,
-        //                    r.CustomerName,
-        //                    r.CustomerSurname,
-        //                    r.DateBooked,
-        //                    r.DateFlight,
-        //                    r.DateReturn,
-        //                    r.DestinationL,
-        //                    r.FlightId,
-        //                    r.FlightL,
-        //                    r.FromL,
-        //                    r.NumA,
-        //                    r.NumC,
-        //                    r.NumI,
-        //                    r.RefID,
-        //                    r.TotalCost,
 
-
-
-        //                }).ToList();
-        //    foreach (var it in list)
-        //    {
-        //        Flight gdd = new Flight();
-        //        gdd.CustomerName = it.FirstName;
-        //        gdd.CustomerSurname = it.LastName;
-        //        gdd.Email = it.Email;
-        //        gdd.DateFlight = it.DateFlight;
-        //        gdd.DateReturn = it.DateReturn;
-        //        gdd.DestinationL = it.DestinationL;
-        //        gdd.FlightId = it.FlightId;
-        //        gdd.FlightL = it.FlightL;
-        //        gdd.FromL = it.FromL;
-        //        gdd.IdNumber = it.IdNumber;
-        //        gdd.NumA = it.NumA;
-        //        gdd.NumC = it.NumC;
-        //        gdd.NumI = it.NumI;
-        //        gdd.RefID = it.RefID;
-
-        //        gdd.BasicCharge = it.BasicCharge;
-        //        gdd.TotalCost = it.TotalCost;
-        //        gdd.Discount = it.Discount;
-
-        //        gd.Add(gdd);
-        //    }
-        //    return View(gd);
-        //}
-        //public ActionResult ConfirmFlight(int? FlightID)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Flights.Add(flight);
-        //        db.SaveChanges();
-        //        Session["bookID"] = flight.FlightID;
-        //        return RedirectToAction("Payment");
-        //    }
-        //    {
-        //        if (FlightID == null)
-        //        {
-        //            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //        }
-        //        Flight reservation = db.Flights.Find(FlightID);
-        //        if (reservation == null)
-        //        {
-        //            return HttpNotFound();
-        //        }
-        //        Flight flight = db.Flights.Where(x => x.FlightID == flight.Email).FirstOrDefault();
-
-        //        GuestDetails Gdetails = new GuestDetails()
-        //        {
-        //            checkInDate = reservation.checkInDate,
-        //            checkOutDate = reservation.checkOutDate,
-        //            numGuests = reservation.numGuests,
-        //            DayNo = reservation.DayNo,
-        //            bookings = 0,
-        //            RoomNo = reservation.RoomNo,
-        //            FloorNum = rooms.FloorNum,
-        //            Type = rooms.Roomtype.Type,
-        //            BasicCharge = rooms.Roomtype.BasicCharge,
-        //            TotalPrice = reservation.TotalPrice
-        //        };
-
-        //        var rm = db.Flights.Find(reservation.FlightId);
-        //        var rmb = db.roomTypes.Find(rm.RoomTypeId);
-        //        gdd.CustomerName = it.FirstName;
-        //        gdd.CustomerSurname = it.LastName;
-        //        gdd.Email = it.Email;
-        //        gdd.DateFlight = it.DateFlight;
-        //        gdd.DateReturn = it.DateReturn;
-        //        gdd.DestinationL = it.DestinationL;
-        //        gdd.FlightId = it.FlightId;
-        //        gdd.FlightL = it.FlightL;
-        //        gdd.FromL = it.FromL;
-        //        gdd.IdNumber = it.IdNumber;
-        //        gdd.NumA = it.NumA;
-        //        gdd.NumC = it.NumC;
-        //        gdd.NumI = it.NumI;
-        //        gdd.RefID = it.RefID;
-
-        //        Flight Gdetails = new Flight();
-        //        Gdetails.CustomerName = reservation.CustomerName;
-        //        Gdetails.CustomerSurname = reservation.CustomerSurname;
-        //        Gdetails.DateFlight = reservation.DateFlight;
-        //        Gdetails.DateReturn = reservation.DateReturn; ;
-        //        Gdetails.DestinationL = reservation.DestinationL;
-        //        Gdetails.FlightId = reservation.FlightId;
-        //        Gdetails.FlightL = reservation.FlightL;
-        //        Gdetails.FromL = reservation.FromL;
-        //        Gdetails.IdNumber = reservation.IdNumber;
-        //        Gdetails.NumA = reservation.NumA;
-        //        Gdetails.NumC = reservation.NumC;
-        //        Gdetails.NumI = reservation.NumI;
-        //        Gdetails.RefID = reservation.RefID;
-        //        Gdetails.Email = reservation.Email;
-
-
-        //        Gdetails.bookings = 0;
-        //        Gdetails.TotalCost = rm.TotalCost;
-        //        Gdetails.ReturnTicket_Price = rm.ReturnTicketPrice();
-        //        Gdetails.Seat_Type_Calc = rm.SeatTypeCalc();
-        //        Gdetails. = rm.BasicCharge;
-        //        Gdetails.TotalPrice = reservation.TotalPrice;
-        //        Gdetails.Discount = reservation.Discount;
-        //        return View(Gdetails);
-        //    }
-
-
-        //}
+        public async Task<ActionResult> checkIN(int id)
+        {
+            double insurance = 0;
+            Flight flight = await db.Flights.FindAsync(id);
+            insurance = flight.NumA * 1000;
+            flight.InsName = insurance;
+            await db.SaveChangesAsync();
+            return RedirectToAction("Details" + "/" + id);
+        }
         // GET: Flights/Create
         public ActionResult Create(string id)
         {
@@ -378,26 +240,7 @@ namespace WebApplication2.Controllers
                 finalCost += 50 * (flight.NumA + flight.NumC);
             }
 
-            ////Aircrafts
-            //if (flight.FlightL.ToString() == "Kulula")
-            //{
-            //    finalCost += 600;
-            //}
-            //else if (flight.FlightL.ToString() == "BritishAirways")
-            //{
-            //    finalCost += 800;
-            //}
-            //else if (flight.FlightL.ToString() == "SAA")
-            //{
-            //    finalCost += 450;
-            //}
-
-            //finalCost = finalCost * 2;
-
-            //if (flight.returnTicket == true)
-            //{
-            //    finalCost = finalCost * 2;
-            //}
+            
             flights.RefID = flights.determineKey();
             flights.TotalCost = finalCost;
             flights.FlightL = flight.FlightL;
@@ -410,9 +253,94 @@ namespace WebApplication2.Controllers
             flights.NumI = flight.NumI;
             db.Flights.Add(flights);
             await db.SaveChangesAsync();
+          
+
+            PdfDocument document = new PdfDocument();
+            //Adds page settings
+            document.PageSettings.Orientation = PdfPageOrientation.Portrait;
+            document.PageSettings.Margins.All = 50;
+            //Adds a page to the document
+            PdfPage page = document.Pages.Add();
+            PdfGraphics graphics = page.Graphics;
+            //Loads the image from disk
+            //PdfImage image = PdfImage.FromStream(msS);
+            RectangleF bounds = new RectangleF(10, 10, 200, 200);
+            //Draws the image to the PDF page
+            //page.Graphics.DrawImage(image, bounds);
+            PdfBrush solidBrush = new PdfSolidBrush(new PdfColor(80, 138, 4));
+            bounds = new RectangleF(0, bounds.Bottom + 90, graphics.ClientSize.Width, 30);
+            //Draws a rectangle to place the heading in that region.
+            graphics.DrawRectangle(solidBrush, bounds);
+            //Creates a font for adding the heading in the page
+            PdfFont subHeadingFont = new PdfStandardFont(PdfFontFamily.TimesRoman, 13);
+            //Creates a text element to add the invoice number
+            PdfTextElement element = new PdfTextElement("Thank you! You have successfully booked the " + flight.FlightId + " Flight!", subHeadingFont);
+            element.Brush = PdfBrushes.White;
+            //Draws the heading on the page
+            PdfLayoutResult res = element.Draw(page, new PointF(10, bounds.Top + 8));
+            PdfFont timesRoman = new PdfStandardFont(PdfFontFamily.TimesRoman, 12);
+            //Creates text elements to add the address and draw it to the page.
+            element = new PdfTextElement("This ticket belongs to: " + FirstName, timesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(16, 36, 7));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 45));
+            element = new PdfTextElement("Event Location: " + flight.FlightL + ".", timesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(80, 138, 4));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 15));
+            element = new PdfTextElement("Description: " + flight.FromL + ".", timesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(80, 138, 4));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 15));
+            element = new PdfTextElement("Price: R" + flight.TotalCost, timesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(80, 138, 4));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 15));
+
+            PdfPen linePen = new PdfPen(new PdfColor(80, 138, 4), 0.70f);
+            PointF startPoint = new PointF(0, res.Bounds.Bottom + 3);
+            PointF endPoint = new PointF(graphics.ClientSize.Width, res.Bounds.Bottom + 5);
+            //Draws a line at the bottom of the address
+            graphics.DrawLine(linePen, startPoint, endPoint);
+
+            PdfFont notTimesRoman = new PdfStandardFont(PdfFontFamily.Courier, 16);
+            element = new PdfTextElement("Your Ticket Number is" + flight.TicketNumber, notTimesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(48, 5, 5));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 15));
+
+            linePen = new PdfPen(new PdfColor(80, 138, 4), 0.70f);
+            startPoint = new PointF(0, res.Bounds.Bottom + 3);
+            endPoint = new PointF(graphics.ClientSize.Width, res.Bounds.Bottom + 5);
+            //Draws a line at the bottom of the address
+            graphics.DrawLine(linePen, startPoint, endPoint);
 
 
+            MemoryStream outputStream = new MemoryStream();
+            document.Save(outputStream);
+            outputStream.Position = 0;
 
+            var invoicePdf = new System.Net.Mail.Attachment(outputStream, System.Net.Mime.MediaTypeNames.Application.Pdf);
+            string docname = "Invoice.pdf";
+            invoicePdf.ContentDisposition.FileName = docname;
+
+            MailMessage mail = new MailMessage();
+            string emailTo = User.Identity.Name;
+            MailAddress from = new MailAddress("21642835@dut4life.ac.za");
+            mail.From = from;
+            mail.Subject = "Your e-Ticket for tours: " + flight.FlightL;
+            mail.Body = "Dear " + FirstName + ", find your invoice in the attached PDF document.";
+            mail.To.Add(emailTo);
+            mail.Attachments.Add(invoicePdf);
+            mail.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp-mail.outlook.com";
+            smtp.EnableSsl = true;
+            NetworkCredential networkCredential = new NetworkCredential("21642835@dut4life.ac.za", "$$Dut980514");
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = networkCredential;
+            smtp.Port = 587;
+            smtp.Send(mail);
+            //Clean-up.
+            //Close the document.
+            document.Close(true);
+            //Dispose of email.
+            mail.Dispose();
 
 
 
@@ -461,6 +389,7 @@ namespace WebApplication2.Controllers
             {
                 throw;
             }
+ 
         }
 
         public async Task<ActionResult> Board(int id)

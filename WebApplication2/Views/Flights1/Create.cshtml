@@ -5,6 +5,123 @@
 }
 
 <h2 class="text-center text-info">Book A Flight</h2>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+* {
+  box-sizing: border-box;
+}
+
+.columns {
+  float: left;
+  width: 33.3%;
+  padding: 8px;
+}
+
+        .price {
+            list-style-type: none;
+            border: 1px solid #000000;
+            margin: 0;
+            padding: 0;
+            -webkit-transition: 0.3s;
+            transition: 0.3s;
+        }
+
+
+.price .header {
+  background-color: #111;
+  color: white;
+  font-size: 25px;
+}
+
+        .price li {
+            border-bottom: 1px solid #000000;
+            padding: 20px;
+            text-align: center;
+        }
+
+.price .grey {
+  background-color: #eee;
+  font-size: 20px;
+}
+
+.button {
+  background-color: #04AA6D;
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+ </style>
+</head>
+<body>
+
+
+
+    <div class="columns">
+        <ul class="price">
+            <li class="header" style="background-color:#04AA6D">Kulula</li>
+            <li class="grey">Price Per Person</li>
+            <b>
+            <li>DBN-->JHB - R 700</li>
+            <li>DBN-->CPT - R 1100</li>
+            <li>JHB-->CPT - R 1400</li>
+            <li>JHB-->DBN - R 550</li>
+            <li>CPT-->JHB - R 1200</li>
+            <li>CPT-->DBN - R 900</li>
+            </b>
+        </ul>
+    </div>
+
+    <div class="columns">
+        <ul class="price">
+            <li class="header" style="background-color: #FF0000">SAA</li>
+            <li class="grey">Price Per Person</li>
+            <b>
+            <li>DBN-->JHB - R 600</li>
+            <li>DBN-->CPT - R 1300</li>
+            <li>JHB-->CPT - R 1350</li>
+            <li>JHB-->DBN - R 600</li>
+            <li>CPT-->JHB - R 1150</li>
+            <li>CPT-->DBN - R 850</li>
+            </b>
+        </ul>
+    </div>
+
+    <div class="columns">
+        <ul class="price">
+            <li class="header" style="background-color: #0000FF">British Airways</li>
+            <li class="grey">Price Per Person</li>
+            <b>
+            <li>DBN-->JHB - R 650</li>
+            <li>DBN-->CPT - R 1250</li>
+            <li>JHB-->CPT - R 1000</li>
+            <li>JHB-->DBN - R 650</li>
+            <li>CPT-->JHB - R 750</li>
+            <li>CPT-->DBN - R 800</li>
+            </b>
+        </ul>
+    </div>
+    @*<div class="columns">
+        <ul class="price">
+            <li class="header" style="background-color: #0000FF">British Airways</li>
+            <li class="grey">Price Per Person</li>
+            <b>
+            <li>Economy- R 50</li>
+            <li>Business - R 100</li>
+            <li>First Class - R 150</li>
+
+
+
+            </b>
+        </ul>
+    </div>*@
+</body>
+</html>
 
 
 @using (Html.BeginForm())
@@ -96,14 +213,14 @@
             @Html.Label("Number of Children:", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.NumC, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NumA, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.NumC, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             @Html.Label("Number of Infants:", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.NumI, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NumA, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.NumI, "", new { @class = "text-danger" })
             </div>
         </div>
         @*<div class="form-group">
@@ -121,7 +238,7 @@
                 </div>
             </div>
         </div>*@
-
+      
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-success" />
@@ -129,10 +246,10 @@
         </div>
     </div>}
 
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
 
-        @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-        }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

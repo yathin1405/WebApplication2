@@ -74,7 +74,8 @@ namespace WebApplication2.Models
         public string Return_Time { get; set; }
         public double TotalCost { get; set; }
 
-        public string CustomerName { get; set; } //
+        public string CustomerName { get; set; }
+        public double InsName { get; set; } //
         public string CustomerSurname { get; set; } //
         public string Address { get; set; }
         public string IdNumber { get; set; }//

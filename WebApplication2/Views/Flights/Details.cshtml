@@ -152,7 +152,7 @@ else
 </div>
 <p>
     <a href="@Url.Action(actionName: "MyFlights", controllerName: "Manage")" class="btn btn-success"><i class="fa fa-shopping-cart"></i>Return To Flight History</a>
-    @if (Model.BoardDateAndTime == null && User.IsInRole("Aviation"))
+    @if (Model.BoardDateAndTime == null )
     {
         <a href="#" class="btn btn-success" data-toggle="modal" data-target="#@Model.FlightId"><i class="fa fa-shopping-cart"></i>Board Customer</a>}
 </p>

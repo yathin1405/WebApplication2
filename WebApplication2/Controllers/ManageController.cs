@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -340,8 +341,12 @@ namespace WebApplication2.Controllers
 
             base.Dispose(disposing);
         }
+        public async Task<ActionResult> MyFlights()
+        {
+            return View(await db.Flights.ToListAsync());
+        }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 

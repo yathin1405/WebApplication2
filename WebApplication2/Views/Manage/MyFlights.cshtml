@@ -1,0 +1,63 @@
+﻿@model IEnumerable<WebApplication2.Models.Flight>
+@using WebApplication2.Models
+
+@{
+    ViewBag.Title = "My Flights";
+}
+
+<h2 class="text-center text-success">Booked Flights</h2>
+<h4 class="text-center text-info">Your Flight History</h4>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TicketNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateBooked)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FlightL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DestinationL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RefID)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Where(x => x.CustomerName == User.Identity.GetFirstName()))
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.TicketNumber)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DateBooked)
+    </td>
+    <td>
+        R @Html.DisplayFor(modelItem => item.TotalCost)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.FlightL)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DestinationL)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.RefID)
+    </td>
+    <td>
+        @Html.ActionLink("Review", "Details", "Flights1", new { id = item.FlightId }, null)
+    </td>
+</tr>
+
+    }
+
+</table>
+

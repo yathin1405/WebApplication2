@@ -303,6 +303,11 @@ namespace WebApplication2.Controllers
         {
             Flight flight = await db.Flights.FindAsync(id);
             flight.BoardDateAndTime = DateTime.Now.ToString();
+
+
+
+
+            
             await db.SaveChangesAsync();
             return RedirectToAction("Details" + "/" + id);
         }
