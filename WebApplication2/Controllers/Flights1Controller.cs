@@ -96,7 +96,7 @@ namespace WebApplication2.Controllers
         {
             double insurance = 0;
             Flight flight = await db.Flights.FindAsync(id);
-            insurance = flight.NumA * 1000;
+            flight.NumA = flight.NumA ;
             flight.InsName = insurance;
             await db.SaveChangesAsync();
             return RedirectToAction("Details" + "/" + id);
@@ -133,7 +133,7 @@ namespace WebApplication2.Controllers
             flights.IdNumber = IdNumber;
             flights.Address = Address;
             flights.DateBooked = DateTime.Now.ToString();
-
+            
             //DateTime returns = DateTime.Parse(flight.DateReturn);
             DateTime departs = DateTime.Parse(flight.DateFlight);
             DateTime departsTime = DateTime.Parse(flight.DepartureTime);
@@ -253,7 +253,7 @@ namespace WebApplication2.Controllers
             flights.NumI = flight.NumI;
             db.Flights.Add(flights);
             await db.SaveChangesAsync();
-          
+
 
             PdfDocument document = new PdfDocument();
             //Adds page settings
@@ -263,7 +263,7 @@ namespace WebApplication2.Controllers
             PdfPage page = document.Pages.Add();
             PdfGraphics graphics = page.Graphics;
             //Loads the image from disk
-            //PdfImage image = PdfImage.FromStream(msS);
+            // PdfImage image = PdfImage.FromStream();
             RectangleF bounds = new RectangleF(10, 10, 200, 200);
             //Draws the image to the PDF page
             //page.Graphics.DrawImage(image, bounds);
@@ -281,15 +281,27 @@ namespace WebApplication2.Controllers
             PdfFont timesRoman = new PdfStandardFont(PdfFontFamily.TimesRoman, 12);
             //Creates text elements to add the address and draw it to the page.
             element = new PdfTextElement("This ticket belongs to: " + FirstName, timesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(16, 36, 7));          
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 45));
+            element = new PdfTextElement("Departure Time: " + flight.DepartureTime, timesRoman);
             element.Brush = new PdfSolidBrush(new PdfColor(16, 36, 7));
             res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 45));
-            element = new PdfTextElement("Event Location: " + flight.FlightL + ".", timesRoman);
+            element = new PdfTextElement("Number of Adults: " + flight.NumA, timesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(16, 36, 7));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 45));
+            element = new PdfTextElement("Number of Children: " + flight.NumC, timesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(16, 36, 7));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 45));
+            element = new PdfTextElement("Number of Infants: " + flight.NumI, timesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(16, 36, 7));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 45));
+            element = new PdfTextElement("Flight Location: " + flight.DestinationL + ".", timesRoman);
             element.Brush = new PdfSolidBrush(new PdfColor(80, 138, 4));
             res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 15));
-            element = new PdfTextElement("Description: " + flight.FromL + ".", timesRoman);
+            element = new PdfTextElement("From: " + flight.FromL + ".", timesRoman);
             element.Brush = new PdfSolidBrush(new PdfColor(80, 138, 4));
             res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 15));
-            element = new PdfTextElement("Price: R" + flight.TotalCost, timesRoman);
+            element = new PdfTextElement("Price: R" + finalCost, timesRoman);
             element.Brush = new PdfSolidBrush(new PdfColor(80, 138, 4));
             res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 15));
 
@@ -298,19 +310,15 @@ namespace WebApplication2.Controllers
             PointF endPoint = new PointF(graphics.ClientSize.Width, res.Bounds.Bottom + 5);
             //Draws a line at the bottom of the address
             graphics.DrawLine(linePen, startPoint, endPoint);
-
             PdfFont notTimesRoman = new PdfStandardFont(PdfFontFamily.Courier, 16);
-            element = new PdfTextElement("Your Ticket Number is" + flight.TicketNumber, notTimesRoman);
+            element = new PdfTextElement("Your Ticket Number is" + Ticket, notTimesRoman);
             element.Brush = new PdfSolidBrush(new PdfColor(48, 5, 5));
             res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 15));
-
             linePen = new PdfPen(new PdfColor(80, 138, 4), 0.70f);
             startPoint = new PointF(0, res.Bounds.Bottom + 3);
             endPoint = new PointF(graphics.ClientSize.Width, res.Bounds.Bottom + 5);
             //Draws a line at the bottom of the address
             graphics.DrawLine(linePen, startPoint, endPoint);
-
-
             MemoryStream outputStream = new MemoryStream();
             document.Save(outputStream);
             outputStream.Position = 0;
@@ -341,7 +349,7 @@ namespace WebApplication2.Controllers
             document.Close(true);
             //Dispose of email.
             mail.Dispose();
-
+        
 
 
 

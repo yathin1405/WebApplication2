@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication2.Models;
+using System.Net.Mail;
+using System.IO;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using System.Drawing;
 using System.Text;
+using System;
+using System.Data.Entity;
 
 namespace WebApplication2.Controllers
 {
@@ -257,6 +260,100 @@ namespace WebApplication2.Controllers
 
             db.Flights.Add(flights);
             await db.SaveChangesAsync();
+            PdfDocument document = new PdfDocument();
+            //Adds page settings
+            document.PageSettings.Orientation = PdfPageOrientation.Portrait;
+            document.PageSettings.Margins.All = 50;
+            //Adds a page to the document
+            PdfPage page = document.Pages.Add();
+            PdfGraphics graphics = page.Graphics;
+            //Loads the image from disk
+            // PdfImage image = PdfImage.FromStream();
+            RectangleF bounds = new RectangleF(10, 10, 200, 200);
+            //Draws the image to the PDF page
+            //page.Graphics.DrawImage(image, bounds);
+            PdfBrush solidBrush = new PdfSolidBrush(new PdfColor(80, 138, 4));
+            bounds = new RectangleF(0, bounds.Bottom + 90, graphics.ClientSize.Width, 30);
+            //Draws a rectangle to place the heading in that region.
+            graphics.DrawRectangle(solidBrush, bounds);
+            //Creates a font for adding the heading in the page
+            PdfFont subHeadingFont = new PdfStandardFont(PdfFontFamily.TimesRoman, 13);
+            //Creates a text element to add the invoice number
+            PdfTextElement element = new PdfTextElement("Thank you! You have successfully booked the " + flight.FlightId + " Flight!", subHeadingFont);
+            element.Brush = PdfBrushes.White;
+            //Draws the heading on the page
+            PdfLayoutResult res = element.Draw(page, new PointF(10, bounds.Top + 8));
+            PdfFont timesRoman = new PdfStandardFont(PdfFontFamily.TimesRoman, 12);
+            //Creates text elements to add the address and draw it to the page.
+            element = new PdfTextElement("This ticket belongs to: " + FirstName, timesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(16, 36, 7));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 45));
+            element = new PdfTextElement("Departure Time: " + flight.DepartureTime, timesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(16, 36, 7));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 45));
+            element = new PdfTextElement("Number of Adults: " + flight.NumA, timesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(16, 36, 7));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 45));
+            element = new PdfTextElement("Number of Children: " + flight.NumC, timesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(16, 36, 7));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 45));
+            element = new PdfTextElement("Number of Infants: " + flight.NumI, timesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(16, 36, 7));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 45));
+            element = new PdfTextElement("Flight Location: " + flight.DestinationL + ".", timesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(80, 138, 4));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 15));
+            element = new PdfTextElement("From: " + flight.FromL + ".", timesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(80, 138, 4));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 15));
+            element = new PdfTextElement("Price: R" + finalCost, timesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(80, 138, 4));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 15));
+
+            PdfPen linePen = new PdfPen(new PdfColor(80, 138, 4), 0.70f);
+            PointF startPoint = new PointF(0, res.Bounds.Bottom + 3);
+            PointF endPoint = new PointF(graphics.ClientSize.Width, res.Bounds.Bottom + 5);
+            //Draws a line at the bottom of the address
+            graphics.DrawLine(linePen, startPoint, endPoint);
+            PdfFont notTimesRoman = new PdfStandardFont(PdfFontFamily.Courier, 16);
+            element = new PdfTextElement("Your Ticket Number is" + Ticket, notTimesRoman);
+            element.Brush = new PdfSolidBrush(new PdfColor(48, 5, 5));
+            res = element.Draw(page, new PointF(10, res.Bounds.Bottom + 15));
+            linePen = new PdfPen(new PdfColor(80, 138, 4), 0.70f);
+            startPoint = new PointF(0, res.Bounds.Bottom + 3);
+            endPoint = new PointF(graphics.ClientSize.Width, res.Bounds.Bottom + 5);
+            //Draws a line at the bottom of the address
+            graphics.DrawLine(linePen, startPoint, endPoint);
+            MemoryStream outputStream = new MemoryStream();
+            document.Save(outputStream);
+            outputStream.Position = 0;
+
+            var invoicePdf = new System.Net.Mail.Attachment(outputStream, System.Net.Mime.MediaTypeNames.Application.Pdf);
+            string docname = "Invoice.pdf";
+            invoicePdf.ContentDisposition.FileName = docname;
+
+            MailMessage mail = new MailMessage();
+            string emailTo = User.Identity.Name;
+            MailAddress from = new MailAddress("21642835@dut4life.ac.za");
+            mail.From = from;
+            mail.Subject = "Your e-Ticket for tours: " + flight.FlightL;
+            mail.Body = "Dear " + FirstName + ", find your invoice in the attached PDF document.";
+            mail.To.Add(emailTo);
+            mail.Attachments.Add(invoicePdf);
+            mail.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp-mail.outlook.com";
+            smtp.EnableSsl = true;
+            NetworkCredential networkCredential = new NetworkCredential("21642835@dut4life.ac.za", "$$Dut980514");
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = networkCredential;
+            smtp.Port = 587;
+            smtp.Send(mail);
+            //Clean-up.
+            //Close the document.
+            document.Close(true);
+            //Dispose of email.
+            mail.Dispose();
             try
             {
                 // Retrieve required values for the PayFast Merchant

@@ -45,5 +45,7 @@ namespace WebApplication2.Models
         }
 
         public System.Data.Entity.DbSet<WebApplication2.Models.Flight> Flights { get; set; }
+
+        public System.Data.Entity.DbSet<WebApplication2.Models.FlightBooking> FlightBookings { get; set; }
     }
 }

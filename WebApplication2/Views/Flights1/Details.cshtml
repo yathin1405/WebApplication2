@@ -133,14 +133,14 @@ else
 
     </dl>
 
-    <h2 class="text-center text-success">Waypoint To Airport: </h2>
+    @*<h2 class="text-center text-success">Waypoint To Airport: </h2>
     <iframe width="800"
             height="480"
             frameborder="0" style="position : relative; left : 15%;"
             src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyBNcE7mezvGDziXJG3p8wvchw5SSZMnUiQ&origin='@Model.Address'&destination='@ViewBag.Destination'&avoid=tolls|highways" allowfullscreen>
     </iframe>
     <br />
-    <br />
+    <br />*@
 
 
     <!-- Modal -->
@@ -168,18 +168,15 @@ else
                     <p class="text-center">@Model.FlightL</p>
                     <p class="text-success text-center text-capitalize">Destination:</p>
                     <p class="text-center">@Model.DestinationL</p>
-                    <p class="text-success text-center text-capitalize">Insurance:</p>
-                    <p class="text-center">@Model.InsName</p>
+                 
 
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Board", "Flights", new { id = Model.FlightId })'">Confirm Boarded</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("checkIN", "Flights1", new { id = Model.FlightId })'">Add insurance</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                </div>
+               
             </div>
 
         </div>
